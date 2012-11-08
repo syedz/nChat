@@ -7,6 +7,14 @@
 	socket.on('entrance', function(data){
 		document.write('<p>' + data.message + '</p>');
 	});
+
+	socket.on('exit', function(data){
+		document.write('<p>' + data.message + '</p>');
+	});
+
+	socket.on('chat', function(data){
+		document.write('<p>' + data.message + '</p>');
+	});
 </script>
 </head>
 <body>
