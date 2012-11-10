@@ -18,6 +18,10 @@ chatroom.sockets.on('connection', function(socket){
 		});
 	});
 
+	socket.on('typing', function(data){
+		chatroom.sockets.emit('typing');
+	});
+
 	socket.on('chat', function(data){
 		chatroom.sockets.emit('chat', {
 			message: '#' + data.message

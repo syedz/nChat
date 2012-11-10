@@ -1,6 +1,6 @@
-jQuery(document).ready(function(){
+$(document).ready(function(){
 	var log_chat_message = function(message, type){
-		var li = jQuery('<li/>').text(message);
+		var li = $('<li/>').text(message);
 		
 		if (type === 'system') {
 			li.css({'font-weight' : 'bold'});
@@ -8,7 +8,7 @@ jQuery(document).ready(function(){
 			li.css({'font-weight' : 'bold', 'color' : '#F00'});
 		}
 
-		jQuery('#chat_log').append(li);
+		$('#chat_log').append(li);
 	};
 
 	var socket = io.connect('http://localhost:3000');
@@ -25,10 +25,23 @@ jQuery(document).ready(function(){
 		log_chat_message(data.message, 'normal');
 	});
 
-	jQuery('#chat_box').keypress(function(event){
+	socket.on('typing', function(data){
+		$("#typing").show();
+	});
+
+	$('#chat_box').keypress(function(event){
+		var message = $('#chat_box').val();
+
 		if (event.which == 13) {
-			socket.emit('chat', { message: jQuery('#chat_box').val()});
-			jQuery('#chat_box').val('');
+			socket.emit('chat', { message: message});
+			$('#chat_box').val('');
+			$("#typing").hide();
+		} else if (event.which > 0) {
+			socket.emit('typing');
+		} 
+
+		if (message == '') {
+			$("#typing").hide();
 		}
 	});
 });
