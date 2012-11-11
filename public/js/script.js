@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 	var log_chat_message = function(message, type){
 		var li = $('<li/>').text(message);
 		
@@ -23,25 +23,26 @@ $(document).ready(function(){
 
 	socket.on('chat', function(data){
 		log_chat_message(data.message, 'normal');
+		$("#typing").hide();
 	});
 
 	socket.on('typing', function(data){
 		$("#typing").show();
 	});
 
-	$('#chat_box').keypress(function(event){
+	$('#chat_box').keydown(function(event){
 		var message = $('#chat_box').val();
 
 		if (event.which == 13) {
 			socket.emit('chat', { message: message});
 			$('#chat_box').val('');
 			$("#typing").hide();
-		} else if (event.which > 0) {
+		} else if (event.which == 8 || event.which == 127){
+			if (message.length == 1) {
+				$("#typing").hide();
+			}
+		} else if (event.which >= 32 && event.which <= 127) {
 			socket.emit('typing');
-		} 
-
-		if (message == '') {
-			$("#typing").hide();
 		}
 	});
 });
