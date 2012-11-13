@@ -8,11 +8,11 @@ Simple chat app built in Node.js
   npm install
 </pre>
 <pre>
-  node-dev app.js
+  node-dev server.js
 </pre>
 
 ## Running
 <pre>
-	http:localhost:3000
-	// Open up 2 windows to use the app.
+	http://localhost:3000
 </pre>
+// Open up 2 windows to use the app.
